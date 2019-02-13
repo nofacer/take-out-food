@@ -5,6 +5,21 @@ describe('Test functions', function () {
     let expected = ["ITEM0001", 1];
     expect(result).toEqual(expected)
   });
+  it('of buildDict which builds a dict from item list', function () {
+    let inputs = [{
+      id: 'ITEM0001',
+      name: '黄焖鸡',
+      price: 18.00
+    }, {
+      id: 'ITEM0013',
+      name: '肉夹馍',
+      price: 6.00
+    }];
+    let result = buildDict(inputs);
+    let expected = [];
+    expected = {'ITEM0001': [18, '黄焖鸡'], 'ITEM0013': [6, '肉夹馍']};
+    expect(result).toEqual(expected)
+  });
 
 
 });

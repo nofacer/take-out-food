@@ -16,3 +16,12 @@ function decode(singleInstruction) {
   const slicedInstruction = singleInstruction.split(" ");
   return [slicedInstruction[0], parseInt(slicedInstruction[2])]
 }
+
+function buildDict(items) {
+  let blankDict = {};
+  for (let i in items) {
+    blankDict[items[i].id] = [parseInt(items[i].price), items[i].name];
+  }
+  return blankDict;
+}
+
