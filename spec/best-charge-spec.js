@@ -1,10 +1,11 @@
 describe('Test functions', function () {
   it('of decode which gets the id and amount of certain food', function () {
-    let inputs = "ITEM0001 x 1";
+    let inputs = ["ITEM0001 x 1", "ITEM0013 x 2", "ITEM0022 x 1"];
     let result = decode(inputs);
-    let expected = ["ITEM0001", 1];
+    let expected = [["ITEM0001", 1], ["ITEM0013", 2], ["ITEM0022", 1]];
     expect(result).toEqual(expected)
   });
+
   it('of buildDict which builds a dict from item list', function () {
     let inputs = [{
       id: 'ITEM0001',
@@ -18,9 +19,17 @@ describe('Test functions', function () {
     let result = buildDict(inputs);
     let expected = [];
     expected = {'ITEM0001': [18, '黄焖鸡'], 'ITEM0013': [6, '肉夹馍']};
-    expect(result).toEqual(expected)
+    expect(result).toEqual(expected);
   });
 
+  it('of calSum which calculates the sum cost of all food without any reduction', function () {
+    let inputs = ["ITEM0001 x 1", "ITEM0013 x 2"];
+    let itemDict = buildDict(loadAllItems());
+    let decodedItems = decode(inputs);
+    let result = calSum(decodedItems, itemDict);
+    let expected = 30;
+    expect(result).toEqual(expected)
+  });
 
 });
 
