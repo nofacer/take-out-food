@@ -26,9 +26,44 @@ describe('Test functions', function () {
     let inputs = ["ITEM0001 x 1", "ITEM0013 x 2"];
     let itemDict = buildDict(loadAllItems());
     let decodedItems = decode(inputs);
-    let result = calSum(decodedItems, itemDict);
-    let expected = 30;
-    expect(result).toEqual(expected)
+    let sum = calSum(decodedItems, itemDict)[0];
+    let text = calSum(decodedItems, itemDict)[1].trim();
+    let expectedSum = 30;
+    let expectedText=`黄焖鸡 x 1 = 18元
+肉夹馍 x 2 = 12元
+`.trim();
+    expect(sum).toEqual(expectedSum);
+    expect(text).toEqual(expectedText);
+  });
+
+  it('of reduction which select 指定菜品半价', function () {
+    let inputs = ["ITEM0001 x 1", "ITEM0013 x 2", "ITEM0022 x 1"];
+    let itemDict = buildDict(loadAllItems());
+    let decodedItems = decode(inputs);
+    let result = reduction(decodedItems, itemDict);
+    let reductionSum=result[0];
+    let reductionText = result[1];
+    expect(reductionSum).toEqual(13);
+    expect(reductionText).toEqual("指定菜品半价(黄焖鸡，凉皮)，省13元");
+  });
+
+  it('of reduction which select 满30减6元', function () {
+    let inputs = ["ITEM0013 x 4", "ITEM0022 x 1"];
+    let itemDict = buildDict(loadAllItems());
+    let decodedItems = decode(inputs);
+    let result = reduction(decodedItems, itemDict);
+    let reductionSum=result[0];
+    let reductionText = result[1];
+    expect(reductionSum).toEqual(6);
+    expect(reductionText).toEqual("满30减6元，省6元");
+  });
+
+  it('of reduction which select nothing', function () {
+    let inputs = ["ITEM0013 x 4"];
+    let itemDict = buildDict(loadAllItems());
+    let decodedItems = decode(inputs);
+    let result = reduction(decodedItems, itemDict);
+    expect(result).toEqual(null);
   });
 
 });
